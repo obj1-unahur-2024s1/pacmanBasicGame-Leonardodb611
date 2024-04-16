@@ -3,6 +3,18 @@ import example.*
 
 program pacman {
 	
+	const rivales = [new Rival(numero = 1), new Rival(numero = 2)]
+	
+	rivales.forEach{ rival => 
+			game.addVisual(rival)
+			game.onTick(2000, "movimiento", {=> rival.acercarseA(pacman)})
+			game.whenCollideDo(rival, {personaje => personaje.chocarCon(rival)
+			})
+	}
+	
+	
+	
+	
 	// límites del juego
 	game.width(14)
 	game.height(8)
@@ -12,6 +24,8 @@ program pacman {
 	
 	// personaje principal
 	game.addVisualCharacter(pacman)
+	
+	game.title("Pacmans")
 	
 	// que arranque el juego!
 	game.start()
