@@ -3,24 +3,60 @@ import example.*
 
 program pacman {
 	
-	const rivales = [new Rival(numero = 1), new Rival(numero = 2)]
 	
-	rivales.forEach{ rival => 
+	const enemigos = [new Enemigo(numero = 3), new Enemigo(numero = 4)
+		, new Enemigo(numero = 5), new Enemigo(numero = 6), new Enemigo(numero = 7), new Enemigo(numero = 8)
+	]
+	
+	
+	
+	
+	enemigos.forEach{ rival => 
+			
 			game.addVisual(rival)
-			game.onTick(2000, "movimiento", {=> rival.acercarseA(pacman)})
-			game.whenCollideDo(rival, {personaje => personaje.chocarCon(rival)
+			
+			game.whenCollideDo(rival, {personaje => personaje.impactoCon(rival)
+				
 			})
+			
 	}
+	
 	
 	
 	
 	
 	// límites del juego
 	game.width(14)
-	game.height(8)
+	game.height(10)
+	
+	
 	
 	// fondo
-	game.boardGround("pacmanBackground.jpg")
+	 
+	
+	keyboard.d().onPressDo {const rival = new Rival(numero =1) game.addVisual(rival)
+		game.onTick(100, "movimiento", {=> 
+			rival.irHaciaDerecha()
+		
+			if(rival.position().x() >= 14){
+			game.removeTickEvent("movimiento")
+		} 
+		})
+		
+	}
+	
+	
+	keyboard.a().onPressDo {const rival2 = new Rival(numero =2) game.addVisual(rival2)
+		game.onTick(100, "movimiento1", {=> 
+			rival2.irHaciaIzquierda()
+			if(rival2.position().x() == -1){
+			game.removeTickEvent("movimiento1")
+		} 
+		})
+		
+	}
+
+
 	
 	// personaje principal
 	game.addVisualCharacter(pacman)
